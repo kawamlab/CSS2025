@@ -1,21 +1,60 @@
-\documentclass{classes/report}
+\documentclass{css2025}
+
+\title{
+	タイトル\textcolor{red}{（14pt，中央揃え）}
+}
+
+\subtitle{
+    ―サブタイトル\textcolor{red}{（10.5pt，中央揃え）}―
+}
+
+\author[1]{〇新潟太郎}
+\author[2]{長岡花子（発表者氏名，10.5pt，中央揃え，発表者には「○」を付ける）}
+\affil[1)]{冬季大学\textcolor{red}{（発表者の所属）}}
+\affil[2)]{スポーツ大学\textcolor{red}{（発表者の所属）}}
+
 
 \begin{document}
+\maketitle
 
-\pagenumbering{roman}
-\subfile{sections/title}
-\newpage
+\section{背景と目的}
+\textcolor{red}{（本文はMS明朝，10.5pt，２段組）}冬季スポーツの代表的なスキーは，社会的特性，身体的・精神的効果の面から生涯スポーツとしての普及が試みられている．
+そこで，本研究の目的は・・・を・・・することとした．
 
-\tableofcontents
-\clearpage
+\section{方法}
+調査方法は，北海道S市にあるTスキー場来場者500名を対象にアンケート調査を実施した．
+調査内容は・・・．質問項目毎に得点化し，・・・・．統計処理では，・・・．
 
-\pagenumbering{arabic}
+\begin{table}[h]
+    \centering
+    \caption{Sample Table}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        1 & 2 & 3 \\
+        \hline
+        4 & 5 & 6 \\
+        \hline
+        7 & 8 & 9 \\
+        \hline
+    \end{tabular}
+    \label{tab:sample}
+\end{table}
 
-\subfile{sections/abstract}
-\newpage
+\section{結果}
+・・・・・・・・・・・・・・・・・
 
-\subfile{sections/main_issue}
-\newpage
+・・・・・・・・・・・・・・
+
+・・・・・・・・・・・・・・・・・・
+
+% 図の挿入
+\begin{figure}[htbp]
+    \centering
+    \fbox{\includegraphics[width=0.8\linewidth]{figures/dummy.pdf}}
+    \caption{図の説明 \cite{cite:niigata2024} \cite{cite:青空文庫Aozo22:online}}
+    \label{fig:fig1}
+\end{figure}
+
 
 \subfile{sections/references}
 

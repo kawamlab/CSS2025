@@ -1,29 +1,29 @@
-\ProvidesClass{classes/report}[2023/02/20 report]
+\ProvidesClass{css2025}[2025/02/17 v1.0.0 CSS2025 class]
 
 % (u)pLaTeX非互換パッケージに対して互換させるパッチを読み込む命令
 \RequirePackage{plautopatch}
 
-\NeedsTeXFormat{LaTeX2e}
-
 % 2カラム,A4,フォントサイズ9pt
 \LoadClass[
+    twocolumn,
     paper=a4,
-    fontsize=11pt,
+    fontsize=9pt,
     disablejfam,
-    head_space=30mm,
+    head_space=25mm,
     foot_space=30mm,
-    gutter=25mm,
-    fore-edge=25mm,
-    linegap=1zw,
-    report]
+    gutter=30mm,
+    fore-edge=30mm,
+    column_gap=7.5mm]
     {jlreq}
-
 
 \RequirePackage{ifptex}
 \RequirePackage{ifluatex}
 
 \PassOptionsToPackage{hyphens}{url}
+\RequirePackage{secdot} % sectionの数字の後のドットの制御
+\sectiondot{section}
 \RequirePackage{setspace} % 行間設定用パッケージ
+\setstretch{0.8} % 行間設定
 \RequirePackage{here} % 好きな位置にfigなどを置くためのパッケージ
 \RequirePackage{bm} % ベクトルを大文字で書くためのパッケージ
 \RequirePackage[hyphens]{xurl} % URLを表示するためのパッケージ、ハイフンでの改行を許可
@@ -31,16 +31,13 @@
 \RequirePackage{paralist} % インラインリストのパッケージ
 \RequirePackage{amssymb, amsmath} % 高度な数式記述用パッケージ
 \RequirePackage{mathtools} % 高度な数式記述用パッケージ
-\RequirePackage{amsthm} % 定理環境を使用するためのパッケージ
 \RequirePackage{newtxtext,newtxmath} % Times系フォントを使用するためのパッケージ
 \RequirePackage{tabularray} % 高度な表組み用パッケージ
 % \RequirePackage{minted} % ソースコード表示の用パッケージ
 \RequirePackage{siunitx} % SI単位記法に準拠した形式で単位を書くためのパッケージ
 \RequirePackage{subfiles} % 大規模な文章を分割して記述して、統合するためのパッケージ
 \RequirePackage{indentfirst} % 最初の段落でインデントするためのパッケージ
-\RequirePackage{framed} % 囲み付き文章を出すためのパッケージ
 \RequirePackage{type1cm} % 文字の大きさを自由に変えるためのパッケージ
-
 
 
 \ifluatex
@@ -76,7 +73,7 @@
 
     \else
         % pTeXでコンパイルしようとする場合はエラーを出す
-        \ClassError{repost}{This class file is for LuaLaTeX or upLaTeX only.}{Use LuaLaTeX or upLaTeX to compile this document.}
+        \ClassError{resume}{This class file is for LuaLaTeX or upLaTeX only.}{Use LuaLaTeX or upLaTeX to compile this document.}
     \fi
 \fi
 
@@ -85,25 +82,28 @@
 \RequirePackage[bibstyle=bibliography,sorting=none,date=year,isbn=false,doi,giveninits,urldate=iso,seconds]{biblatex} % biblatexを使用するためのパッケージ
 \addbibresource{references.bib}
 
-% \DeclareFieldFormat*{journaltitle}{\textit{#1}} % 日本語雑誌名を通常に、英語雑誌名を斜体に
-% \DeclareFieldFormat*{title}{\textit{#1}}
-% \DeclareFieldFormat[inproceedings]{booktitle}{\textit{#1}}
-% \DeclareFieldFormat[book]{title}{\textit{#1}}
+\RequirePackage{authblk} % 著者情報を記述するためのパッケージ
+\renewcommand*{\Authand}{, } % 著者間の区切りを設定
 
+%ページ数の書式
+\pagestyle{empty}
+
+% figの余白の調整
+\setlength{\intextsep}{0pt}
 
 % キャプションとサブキャプションの設定
 \RequirePackage{silence}
 \WarningFilter{caption}{Unknown document class (or package)}
 \RequirePackage{caption}
 \RequirePackage{subcaption}
-\captionsetup[figure]{labelsep=quad, labelformat=simple, name=Fig.}
-\captionsetup[subfigure]{labelsep=quad, labelformat=simple, name=Fig.}
+\captionsetup[figure]{labelsep=quad, labelformat=simple, name=\bfseries Fig., skip=5pt, font={stretch=0.8}, belowskip=5pt}
+\captionsetup[subfigure]{labelsep=space, labelformat=simple, name=\bfseries Fig., skip=3pt, font={stretch=0.8}, belowskip=5pt}
 \renewcommand*{\thesubfigure}{(\alph{subfigure})}
-\captionsetup[table]{labelsep=quad, labelformat=simple, name=Table}
+\captionsetup[table]{labelsep=quad, labelformat=simple, name=\bfseries Table, skip=5pt, font={stretch=0.8}, belowskip=5pt}
 
 % 本文中のFigureとTableの表記統一のため，\Fig・\Tableを定義
 % 引数としてlabelを受け取り，それを使ってFigureやTableを参照する
-% \FigTableEqマクロの定義
+% \FigTableマクロの定義
 \newcommand{\FigTableEq}[3][]{%
     \def\temp{#1}%
     \ifx\temp\empty
@@ -134,15 +134,14 @@
 }
 
 % sectionのサイズを合わせる
-\RenewBlockHeading{chapter}{0}{lines=6,label_format={第\thechapter 章},font={\jlreq@keepbaselineskip{\bfseries\Huge}},after_label_space=1\jlreq@zw,second_heading_text_indent={-1\jlreq@zw,1\jlreq@zw},subtitle_font={\jlreq@keepbaselineskip{\Large}}}
-\RenewBlockHeading{section}{1}{font=\huge,after_label_space=1\jlreq@zw}
-\RenewBlockHeading{subsection}{2}{font=\LARGE,after_label_space=1\jlreq@zw}
-\RenewBlockHeading{subsubsection}{3}{font=\Large,after_label_space=1\jlreq@zw}
+\RenewBlockHeading{section}{1}{font={\jlreq@keepbaselineskip{\normalsize\bfseries\centering}},after_label_space=0\jlreq@zw}
+\RenewBlockHeading{subsection}{2}{font={\jlreq@keepbaselineskip{\normalsize\bfseries\centering}},after_label_space=0\jlreq@zw}
+\RenewBlockHeading{subsubsection}{3}{font={\jlreq@keepbaselineskip{\normalsize\bfseries\centering}},after_label_space=0\jlreq@zw}
 
 % セクション類の空白の設定
-\ModifyHeading{section}{before_space=30pt, after_space=30pt}
-\ModifyHeading{subsection}{before_space=20pt, after_space=20pt}
-\ModifyHeading{subsubsection}{before_space=15pt, after_space=15pt}
+\ModifyHeading{section}{before_space=5pt, after_space=5pt}
+\ModifyHeading{subsection}{before_space=5pt, after_space=5pt}
+\ModifyHeading{subsubsection}{before_space=5pt, after_space=5pt}
 % セクションタイトルが一行以下なら下、２行以上なら上
 % \ModifyHeading{section}{lines=1}
 % \ModifyHeading{subsection}{lines=1}
@@ -150,10 +149,37 @@
 
 % セクションが連続する際の行取りを設定
 \SetBlockHeadingSpaces{
-    {_chapter{*},_section{before_space=0pt, after_space=15pt}},
-    {_section{*},_subsection{before_space=5pt, after_space=15pt}}
-    {_subsection{*},_subsubsection{before_space=5pt, after_space=15pt}}
+    {_section{*},_subsection{before_space=0pt, after_space=5pt}}
+    {_subsection{*},_subsubsection{before_space=0pt, after_space=5pt}}
 }
 
-\setcounter{tocdepth}{2}
-\setcounter{secnumdepth}{4}
+% サブタイトル用変数定義
+\def\subtitle#1{\gdef\@subtitle{#1}}
+\let\@subtitle\@empty
+
+% タイトルの設定
+\makeatletter
+\renewcommand{\@maketitle}{\newpage
+    \centering
+    \fontsize{14pt}{14pt}\selectfont
+    \@title
+    \par
+
+    \ifx\@subtitle\@empty
+    \else
+        \vspace{5pt}
+        \fontsize{10.5pt}{10.5pt}\selectfont
+        \@subtitle
+        \par
+        \vspace{5pt}
+        \normalfont
+    \fi
+
+    \vspace{.5\jlreq@zh}
+    \fontsize{10pt}{10pt}\selectfont
+    \@author
+    \par
+    \vspace{2\jlreq@zh}
+}
+\normalsize
+\makeatother
