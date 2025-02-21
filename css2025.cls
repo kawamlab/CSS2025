@@ -84,6 +84,7 @@
 
 \RequirePackage{authblk} % 著者情報を記述するためのパッケージ
 \renewcommand*{\Authand}{, } % 著者間の区切りを設定
+\renewcommand*{\Authands}{, } % 著者間の区切りを設定
 
 % ヘッダーの設定
 \RequirePackage{titleps} % ヘッダ・フッタの設定を行うためのパッケージ
