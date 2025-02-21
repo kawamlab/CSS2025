@@ -85,8 +85,17 @@
 \RequirePackage{authblk} % 著者情報を記述するためのパッケージ
 \renewcommand*{\Authand}{, } % 著者間の区切りを設定
 
-%ページ数の書式
-\pagestyle{empty}
+% ヘッダーの設定
+\RequirePackage{titleps} % ヘッダ・フッタの設定を行うためのパッケージ
+
+% plain styleを上書き
+\renewpagestyle{plain}{
+    \sethead{}{}{カーリング科学シンポジウム2025}
+    \setfoot{}{}{}
+}
+
+\pagestyle{plain}
+
 
 % figの余白の調整
 \setlength{\intextsep}{0pt}
